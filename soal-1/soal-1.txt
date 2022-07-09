@@ -1,0 +1,11 @@
+1. SELECT * FROM customers WHERE LOWER(customers.address) LIKE '%jakarta%';
+
+2. SELECT customers.name, customers.phone, customers.address, orders.resi_number, orders.created_at AS order_date, 
+   orders.code AS order_code , shipments.code AS shipment_code, shipments.status, shipments.created_at AS shipment_date FROM 
+   customers INNER JOIN orders ON customers.id = orders.customer_id INNER JOIN shipments ON orders.id = shipments.order_id;
+
+3. SELECT COUNT(CASE shipments.status WHEN 'sent' THEN 1 ELSE null END) AS order_sent, 
+   COUNT(CASE shipments.status WHEN 'cancel' THEN 1 ELSE null END) AS order_cancel
+   FROM customers INNER JOIN orders ON customers.id = orders.customer_id INNER JOIN 
+   shipments ON orders.id = shipments.order_id WHERE LOWER(customers.address) 
+   LIKE '%bekasi%' AND shipments.created_at BETWEEN '2022-01-01' AND '2022-05-01';
